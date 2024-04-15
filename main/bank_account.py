@@ -4,7 +4,10 @@
 #Additionally, a new user or bank administrator can also create a new account, close account, 
 #and modify an account (such as edit name, PIN, or any other personal identification required to open an account).
 
-import mysql.connector 
+import mysql.connector
+
+
+
 
 # Program to make a simple 
 # login screen 
@@ -17,6 +20,15 @@ root=tk.Tk()
 # setting the windows size
 root.geometry("300x300")
 
+def submit():
+	name=name_var.get()
+	password=passw_var.get()			
+	print("The name is : " + name)
+	print("The password is : " + password)
+	name_var.set("")
+	passw_var.set("")
+	if name == "h":
+		menu_screen()
 
 
 
@@ -53,7 +65,10 @@ account_number = tk.Label(root, text='number:', fg='red', font=('caibre',10,'bol
 account_pin = tk.Label(root, text='pin:', fg='red', font=('caibre',10,'bold'))
 account_balance = tk.Label(root, text='balance:', fg='red', font=('caibre',10,'bold'))
 
-
+withdrawal_button=tk.Button(root, text='withdraw')
+deposit_button=tk.Button(root, text='deposit')
+create_account=tk.Button(root, text='new account')
+delete_account=tk.Button(root, text='delete account')
 
 def title_menu():
 	# placing the label and entry in
@@ -72,30 +87,63 @@ def title_menu():
 
 
 
-def submit():
-	name=name_var.get()
-	password=passw_var.get()			
-	print("The name is : " + name)
-	print("The password is : " + password)
-	name_var.set("")
-	passw_var.set("")
-	if name == "h":
-		menu_screen()
-
 
 def menu_screen():
+	connection = mysql.connector.connect(user = 'newuser', database = 'sample', password = 'truepassword')
+	cursor = connection.cursor()
+	cursor2 = connection.cursor()
+
+	
+
+#	testQuery = ("SELECT * FROM user_account")
+	account_name_Query = ("select account_name from user_account")
+	account_number_Query = ("select account_number from user_account")
+#	account_pin_Query = ("select account_pin from user_account")
+#	account_balance_Query = ("select account_balance from user_account")
+
+
+#	cursor.execute(testQuery)
+	cursor.execute(account_name_Query)
+	cursor2.execute(account_number_Query)
+#	cursor.execute(account_pin_Query)
+#	cursor.execute(account_balance_Query)
+	
+
+	for item in cursor:
+
+		print(item)
+	
+	for item in cursor2:
+		print(item)
+	
+
+	cursor.close()
+	cursor2.close()
+	connection.close()
+
 	title_label.destroy()
 	name_label.destroy()
 	name_entry.destroy()
 	passw_label.destroy()
 	passw_entry.destroy()
 	sub_btn.destroy()
+
 	root.geometry("400x400")
 	root.configure(bg='white')
-	menu_screen_label.pack(anchor='w')
-	account_name.pack(anchor='w')
-	account_pin.pack(anchor='w')
-	account_balance.pack(anchor='w')
+
+	menu_screen_label.pack(anchor='center')
+	account_name.pack(anchor='center')
+	account_pin.pack(anchor='center')
+	account_balance.pack(anchor='center')
+
+
+
+#	account_name.configure(text=)
+
+	delete_account.pack(side='bottom')
+	create_account.pack(side='bottom')
+	withdrawal_button.pack(side='bottom')
+	deposit_button.pack(side='bottom')
 
 #	menu_screen_label.configure(width=)
 	#access and create account
