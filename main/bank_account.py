@@ -1,3 +1,11 @@
+#Project description for student: In this project you will create an online banking program. 
+#Users need to have an account number and PIN to identify themselves as owners of an account. 
+#Once users get into the system they will have standard options: check balance, deposit, and withdraw.
+#Additionally, a new user or bank administrator can also create a new account, close account, 
+#and modify an account (such as edit name, PIN, or any other personal identification required to open an account).
+
+import mysql.connector 
+
 # Program to make a simple 
 # login screen 
 
@@ -8,7 +16,6 @@ root=tk.Tk()
 
 # setting the windows size
 root.geometry("300x300")
-
 
 
 
@@ -40,59 +47,58 @@ passw_entry=tk.Entry(root, textvariable = passw_var, font = ('calibre',10,'norma
 # Button that will call the submit function 
 sub_btn=tk.Button(root,text = 'Submit', command = submit)
 
-menu_screen_label = title_label
+menu_screen_label = tk.Label(root, text='American Banking Incorperated', fg='red', font=('caibre',20,'bold'))
+account_name = tk.Label(root, text='name', fg='red', font=('caibre',10,'bold'))
+account_number = tk.Label(root, text='number:', fg='red', font=('caibre',10,'bold'))
+account_pin = tk.Label(root, text='pin:', fg='red', font=('caibre',10,'bold'))
+account_balance = tk.Label(root, text='balance:', fg='red', font=('caibre',10,'bold'))
 
-class Bank_displays():
-	def __init__(self):
-		print('working')
 
-	def main(self):
-		# placing the label and entry in
-		# the required position using grid
-		# method
-		title_label.grid(row=0, column=1)
-		name_label.grid(row=1,column=0)
-		name_entry.grid(row=1,column=1)
-		passw_label.grid(row=2,column=0)
-		passw_entry.grid(row=2,column=1)
-		sub_btn.grid(row=3,column=1)
 
-		# performing an infinite loop 
-		# for the window to display
-		root.mainloop()
+def title_menu():
+	# placing the label and entry in
+	# the required position using grid
+	# method
+	title_label.grid(row=0, column=1)
+	name_label.grid(row=1,column=0)
+	name_entry.grid(row=1,column=1)
+	passw_label.grid(row=2,column=0)
+	passw_entry.grid(row=2,column=1)
+	sub_btn.grid(row=3,column=1)
 
-	#withdrawal function
-	#deposit funciton
-	#account creation
-	def menu_screen(self, username, password):
-		root.geometry("300x600")
-		root.configure(bg='white')
-		menu_screen_label.grid(row=0, column=1)
-		menu_screen_label.configure(fg='blue')
-		#access the database and bank account
-		#display account name
+	# performing an infinite loop 
+	# for the window to display
+	root.mainloop()
 
-		#display pin
-		#display balance
-		#deposit button
-		#withdrawal button
-		root.mainloop()
-	def submit(self):
-		name=name_var.get()
-		password=passw_var.get()			
-		print("The name is : " + name)
-		print("The password is : " + password)
-		name_var.set("")
-		passw_var.set("")
-		if name == "hello" and password == "1234":
-			name_label.destroy()
-			name_entry.destroy()
-			passw_label.destroy()
-			passw_entry.destroy()
-			sub_btn.destroy()
-			self.menu_screen(name, password)
 
-	
 
-menu = Bank_displays()
-menu.main()
+def submit():
+	name=name_var.get()
+	password=passw_var.get()			
+	print("The name is : " + name)
+	print("The password is : " + password)
+	name_var.set("")
+	passw_var.set("")
+	if name == "h":
+		menu_screen()
+
+
+def menu_screen():
+	title_label.destroy()
+	name_label.destroy()
+	name_entry.destroy()
+	passw_label.destroy()
+	passw_entry.destroy()
+	sub_btn.destroy()
+	root.geometry("400x400")
+	root.configure(bg='white')
+	menu_screen_label.pack(anchor='w')
+	account_name.pack(anchor='w')
+	account_pin.pack(anchor='w')
+	account_balance.pack(anchor='w')
+
+#	menu_screen_label.configure(width=)
+	#access and create account
+
+	root.mainloop()
+title_menu()
