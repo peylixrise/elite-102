@@ -1,7 +1,6 @@
 # Program to make a simple 
 # login screen 
 
-import bank_menu as menu
 
 import tkinter as tk
 
@@ -10,30 +9,17 @@ root=tk.Tk()
 # setting the windows size
 root.geometry("300x300")
 
+
+
+
+
 # declaring string variable
 # for storing name and password
 name_var=tk.StringVar()
 passw_var=tk.StringVar()
-
-
 # defining a function that will
 # get the name and password and 
 # print them on the screen
-def submit():
-
-	name=name_var.get()
-	password=passw_var.get()
-	
-	print("The name is : " + name)
-	print("The password is : " + password)
-	
-	name_var.set("")
-	passw_var.set("")
-
-	if name == "hello" and password == "1234":
-		root.destroy()
-		menu.mainmenu()
-	
 
 title_label = tk.Label(root, text='American Banking Incorperated', fg='red')	
 # creating a label for 
@@ -54,16 +40,59 @@ passw_entry=tk.Entry(root, textvariable = passw_var, font = ('calibre',10,'norma
 # Button that will call the submit function 
 sub_btn=tk.Button(root,text = 'Submit', command = submit)
 
-# placing the label and entry in
-# the required position using grid
-# method
-title_label.grid(row=0, column=1)
-name_label.grid(row=1,column=0)
-name_entry.grid(row=1,column=1)
-passw_label.grid(row=2,column=0)
-passw_entry.grid(row=2,column=1)
-sub_btn.grid(row=3,column=1)
+menu_screen_label = title_label
 
-# performing an infinite loop 
-# for the window to display
-root.mainloop()
+class Bank_displays():
+	def __init__(self):
+		print('working')
+
+	def main(self):
+		# placing the label and entry in
+		# the required position using grid
+		# method
+		title_label.grid(row=0, column=1)
+		name_label.grid(row=1,column=0)
+		name_entry.grid(row=1,column=1)
+		passw_label.grid(row=2,column=0)
+		passw_entry.grid(row=2,column=1)
+		sub_btn.grid(row=3,column=1)
+
+		# performing an infinite loop 
+		# for the window to display
+		root.mainloop()
+
+	#withdrawal function
+	#deposit funciton
+	#account creation
+	def menu_screen(self, username, password):
+		root.geometry("300x600")
+		root.configure(bg='white')
+		menu_screen_label.grid(row=0, column=1)
+		menu_screen_label.configure(fg='blue')
+		#access the database and bank account
+		#display account name
+
+		#display pin
+		#display balance
+		#deposit button
+		#withdrawal button
+		root.mainloop()
+	def submit(self):
+		name=name_var.get()
+		password=passw_var.get()			
+		print("The name is : " + name)
+		print("The password is : " + password)
+		name_var.set("")
+		passw_var.set("")
+		if name == "hello" and password == "1234":
+			name_label.destroy()
+			name_entry.destroy()
+			passw_label.destroy()
+			passw_entry.destroy()
+			sub_btn.destroy()
+			self.menu_screen(name, password)
+
+	
+
+menu = Bank_displays()
+menu.main()
