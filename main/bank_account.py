@@ -8,7 +8,6 @@ import mysql.connector
 
 
 
-
 # Program to make a simple 
 # login screen 
 
@@ -27,8 +26,7 @@ def submit():
 	print("The password is : " + password)
 	name_var.set("")
 	passw_var.set("")
-	if name == "h":
-		menu_screen()
+	menu_screen(name, password)
 
 
 
@@ -43,7 +41,7 @@ passw_var=tk.StringVar()
 title_label = tk.Label(root, text='American Banking Incorperated', fg='red')	
 # creating a label for 
 # name using widget Label
-name_label = tk.Label(root, text = 'Username', font=('calibre',10, 'bold'))
+name_label = tk.Label(root, text = 'Username ID', font=('calibre',10, 'bold'))
 
 # creating a entry for input
 # name using widget Entry
@@ -88,37 +86,31 @@ def title_menu():
 
 
 
-def menu_screen():
+def menu_screen(user_Id, user_Pin):
 	connection = mysql.connector.connect(user = 'newuser', database = 'sample', password = 'truepassword')
 	cursor = connection.cursor()
-	cursor2 = connection.cursor()
-
-	
-
-#	testQuery = ("SELECT * FROM user_account")
-	account_name_Query = ("select account_name from user_account")
-	account_number_Query = ("select account_number from user_account")
-#	account_pin_Query = ("select account_pin from user_account")
-#	account_balance_Query = ("select account_balance from user_account")
-
-
-#	cursor.execute(testQuery)
-	cursor.execute(account_name_Query)
-	cursor2.execute(account_number_Query)
-#	cursor.execute(account_pin_Query)
-#	cursor.execute(account_balance_Query)
-	
+	testQuery = (f"select * from user_account where account_pin = {user_Pin} and account_number = {user_Id}")
+	cursor.execute(testQuery)
 
 	for item in cursor:
+		print(item)
 
-		print(item)
-	
-	for item in cursor2:
-		print(item)
-	
+	item = str(item)
+	print(item)
+	query_split = item.split(",")
+	print(query_split)
+
+	for original_object in query_split:
+		print(original_object)
+		object_index = query_split.index(original_object)
+		query_split.pop(object_index)
+		object = original_object.replace("'", "").replace(" ","").replace("(","").replace(")","")
+		query_split.insert(object_index, object)
+#		query_split.insert(object_index, )
+		print(object)
+	print(query_split)
 
 	cursor.close()
-	cursor2.close()
 	connection.close()
 
 	title_label.destroy()
@@ -138,7 +130,7 @@ def menu_screen():
 
 
 
-#	account_name.configure(text=)
+#	account_name.configure(text= user_account_name)
 
 	delete_account.pack(side='bottom')
 	create_account.pack(side='bottom')
