@@ -5,7 +5,6 @@
 #and modify an account (such as edit name, PIN, or any other personal identification required to open an account).
 
 import mysql.connector
-import account
 
 
 # Program to make a simple 
